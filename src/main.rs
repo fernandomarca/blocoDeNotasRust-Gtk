@@ -6,8 +6,8 @@ extern crate gio;
 extern crate gtk;
 use gio::prelude::*;
 use gtk::{
-    prelude::*, Builder, Button, Dialog, FileChooser, FileChooserAction, FileChooserDialog,
-    TextBuffer, TextIter, TextTagTable, TextView, ToolButton, Toolbar, Window,
+    prelude::*, Builder, Dialog, FileChooserAction, FileChooserDialog, TextBuffer, TextTagTable,
+    TextView, ToolButton, Window,
 };
 fn main() {
     if gtk::init().is_err() {
