@@ -68,4 +68,4 @@
 
 <h3>Este Bloco de notas é um projeto é experimental em Rust, aos interessados em contribuir com melhorias, pull request serão bem vindas</h3>
 
-![screen 1](/screenshot/screen.png)
+![screen 1](/screenshot/screen2.png)
