@@ -2,19 +2,29 @@
 extern crate gio;
 extern crate gtk;
 
-use std::fs::{File, OpenOptions};
-use std::io::{Read, Write};
-
+use gdk::prelude::*;
 use gio::prelude::*;
 use gtk::{
     prelude::*, Builder, FileChooserAction, FileChooserDialog, MenuItem, TextBuffer, TextTagTable,
     TextView, ToolButton, Window,
 };
+use std::fs::{File, OpenOptions};
+use std::io::{Read, Write};
 fn main() {
     if gtk::init().is_err() {
         println!("Failed initialize GTK.");
         return;
     }
+    //Css provider custom
+    let screen = gdk::Screen::get_default().unwrap();
+    let provider = gtk::CssProvider::new();
+    gtk::CssProvider::load_from_path(&provider, "./styles.css");
+    gtk::StyleContext::add_provider_for_screen(
+        &screen,
+        &provider,
+        gtk::STYLE_PROVIDER_PRIORITY_APPLICATION,
+    );
+    //
     let glade_src = include_str!("mainWindow.glade");
     let builder = Builder::from_string(glade_src);
     //
