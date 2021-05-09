@@ -42,7 +42,12 @@ fn main() {
     let ref_to_text_view_for_button_open: TextView = text_view.clone(); //Encontrar solução para não clonar um Widget//
     let ref_to_text_view_for_menu_open: TextView = text_view.clone(); //Encontrar solução para não clonar um Widget//
     let ref_to_text_view_for_menu_save: TextView = text_view.clone(); //Encontrar solução para não clonar um Widget//
-    text_view.show();
+
+    // text_view.show();
+    let button_new: ToolButton = builder.get_object("button_new").unwrap();
+    button_new.connect_clicked(move |_| {
+        handler_new_document(&text_view);
+    });
     //salvar o texto escrito no TextView em disco no texto_teste.txt
     let button_save: ToolButton = builder.get_object("button_save").unwrap();
     button_save.connect_clicked(move |_| {
@@ -167,11 +172,14 @@ fn main() {
         dialog_file_chooser.close();
     }
     //
-    fn handler_new_document() {
-        todo!()
+    fn handler_new_document(text_view: &TextView) {
+        let buffer = TextBuffer::new(Some(&TextTagTable::new()));
+        buffer.set_text("");
+        text_view.set_buffer(Some(&buffer));
     }
     //
     fn handler_close_document() {
+        // handler_new_document();
         todo!()
     }
     //
