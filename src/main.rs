@@ -2,14 +2,13 @@
 extern crate gio;
 extern crate gtk;
 
-use glib::prelude::*;
 use std::fs::{File, OpenOptions};
 use std::io::{Read, Write};
 
 use gio::prelude::*;
 use gtk::{
-    prelude::*, Builder, Dialog, FileChooserAction, FileChooserDialog, MenuItem, TextBuffer,
-    TextTagTable, TextView, ToolButton, Window,
+    prelude::*, Builder, FileChooserAction, FileChooserDialog, MenuItem, TextBuffer, TextTagTable,
+    TextView, ToolButton, Window,
 };
 fn main() {
     if gtk::init().is_err() {
@@ -20,7 +19,7 @@ fn main() {
     let builder = Builder::from_string(glade_src);
     //
     let window: Window = builder.get_object("mainWindow").unwrap();
-    let ref_to_window_for_menu_open: Window = window.clone();
+    let ref_to_window_for_menu_open: Window = window.clone(); //Encontrar solução para não clonar um Widget//
     window.show();
     window.connect_destroy(|_| {
         close();
@@ -33,13 +32,13 @@ fn main() {
     text_view.show();
     //salvar o texto escrito no TextView em disco no texto_teste.txt
     let button_save: ToolButton = builder.get_object("button_save").unwrap();
-    button_save.connect_clicked(move |_| {
+    let signal_save = button_save.connect_clicked(move |_| {
         handler_save_file(&text_view);
     });
     //abre um arquivo de texto qualquer e apresenta no TextView
     let button_open: ToolButton = builder.get_object("button_open").unwrap();
     button_open.connect_clicked(move |_elem| {
-        let dialog_file_chooser = handler_open_file(&window, &ref_to_text_view);
+        handler_open_file(&window, &ref_to_text_view);
     });
     //
     let menu_quit: MenuItem = builder.get_object("menu_quit").unwrap();
@@ -112,6 +111,22 @@ fn main() {
             .unwrap();
         let _re = file.write(buf);
         file.flush();
+    }
+    //
+    fn handler_save_as() {
+        todo!()
+    }
+    //
+    fn handler_new_document() {
+        todo!()
+    }
+    //
+    fn handler_close_document() {
+        todo!()
+    }
+    //
+    fn handler_about() {
+        todo!()
     }
     //
     fn close() {
