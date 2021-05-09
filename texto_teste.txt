@@ -1,0 +1,56 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007fdb0905b37a, pid=6205, tid=140577709590080
+#
+# JRE version: Java(TM) SE Runtime Environment (7.0_80-b15) (build 1.7.0_80-b15)
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (24.80-b11 mixed mode linux-amd64 compressed oops)
+# Problematic frame:
+# v  ~BufferBlob::jni_fast_GetLongField
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.java.com/bugreport/crash.jsp
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00007fdb0c24c000):  JavaThread "AWT-XAWT" daemon [_thread_in_native, id=6232, stack(0x00007fdacc618000,0x00007fdacc719000)]
+
+siginfo:si_signo=SIGSEGV: si_errno=0, si_code=1 (SEGV_MAPERR), si_addr=0x0000000000000000
+
+Registers:
+RAX=0x00007fdb11aec2c0, RBX=0x00000000bb364c48, RCX=0x00007fdb11acad80, RDX=0x0000000000000042
+RSP=0x00007fdacc7175e8, RBP=0x00007fdacc717610, RSI=0x0000000000000000, RDI=0x00007fdb0c24c1e8
+R8 =0x00007fdb0c24c000, R9 =0x0000000000000000, R10=0x000000000000023c
+texte salvando no disco#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007fdb0905b37a, pid=6205, tid=140577709590080
+#
+# JRE version: Java(TM) SE Runtime Environment (7.0_80-b15) (build 1.7.0_80-b15)
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (24.80-b11 mixed mode linux-amd64 compressed oops)
+# Problematic frame:
+# v  ~BufferBlob::jni_fast_GetLongField
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.java.com/bugreport/crash.jsp
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00007fdb0c24c000):  JavaThread "AWT-XAWT" daemon [_thread_in_native, id=6232, stack(0x00007fdacc618000,0x00007fdacc719000)]
+
+siginfo:si_signo=SIGSEGV: si_errno=0, si_code=1 (SEGV_MAPERR), si_addr=0x0000000000000000
+
+Registers:
+RAX=0x00007fdb11aec2c0, RBX=0x00000000bb364c48, RCX=0x00007fdb11acad80, RDX=0x0000000000000042
+RSP=0x00007fdacc7175e8, RBP=0x00007fdacc717610, RSI=0x0000000000000000, RDI=0x00007fdb0c24c1e8
+R8 =0x00007fdb0c24c000, R9 =0x0000000000000000, R10=0x000000000000023c

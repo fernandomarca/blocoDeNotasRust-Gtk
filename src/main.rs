@@ -6,8 +6,8 @@ extern crate gio;
 extern crate gtk;
 use gio::prelude::*;
 use gtk::{
-    prelude::*, Builder, Dialog, FileChooserAction, FileChooserDialog, TextBuffer, TextTagTable,
-    TextView, ToolButton, Window,
+    prelude::*, Builder, Dialog, FileChooserAction, FileChooserDialog, MenuItem, TextBuffer,
+    TextTagTable, TextView, ToolButton, Window,
 };
 fn main() {
     if gtk::init().is_err() {
@@ -19,7 +19,10 @@ fn main() {
 
     let window: Window = builder.get_object("mainWindow").unwrap();
     window.show();
-    // window.close();
+    window.connect_destroy(|_| {
+        close();
+    });
+    //
     let text_view: TextView = builder.get_object("text_area").unwrap();
     let ref_to_text_view: TextView = text_view.clone(); //Encontrar solução para não clonar um Widget//
     text_view.show();
@@ -32,6 +35,11 @@ fn main() {
     let button_open: ToolButton = builder.get_object("button_open").unwrap();
     button_open.connect_clicked(move |_elem| {
         let dialog_file_chooser = handler_open_file(&window, &ref_to_text_view);
+    });
+    //
+    let menu_quit: MenuItem = builder.get_object("menu_quit").unwrap();
+    menu_quit.connect_activate(|_| {
+        close();
     });
     //
     fn handler_open_file(parent: &Window, textView: &TextView) {
@@ -86,6 +94,10 @@ fn main() {
             .unwrap();
         let _re = file.write(buf);
         file.flush();
+    }
+
+    fn close() {
+        gtk::main_quit();
     }
     gtk::main();
 }

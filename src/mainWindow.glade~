@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Generated with glade 3.38.2 -->
 <interface>
-  <requires lib="gtk+" version="3.24"/>
+  <requires lib="gtk+" version="3.24" />
   <object class="GtkWindow" id="mainWindow">
     <property name="can-focus">False</property>
     <property name="hexpand">True</property>
     <property name="vexpand">True</property>
-    <property name="window-position">center-on-parent</property>
+    <property name="title" translatable="yes">Editor Rust</property>
+    <property name="window-position">center-always</property>
     <property name="default-width">600</property>
     <property name="default-height">250</property>
+    <signal name="destroy" handler="fechar" object="menu_quit" swapped="no" />
     <child>
       <object class="GtkLayout">
         <property name="visible">True</property>
@@ -55,6 +57,7 @@
                             <property name="can-focus">False</property>
                             <property name="use-underline">True</property>
                             <property name="use-stock">True</property>
+                            <signal name="select" handler="handler_open_file" swapped="no" />
                           </object>
                         </child>
                         <child>
@@ -64,6 +67,7 @@
                             <property name="can-focus">False</property>
                             <property name="use-underline">True</property>
                             <property name="use-stock">True</property>
+                            <signal name="select" handler="handler_save_file" swapped="no" />
                           </object>
                         </child>
                         <child>
@@ -88,6 +92,7 @@
                             <property name="can-focus">False</property>
                             <property name="use-underline">True</property>
                             <property name="use-stock">True</property>
+                            <signal name="select" handler="fechar" swapped="no" />
                           </object>
                         </child>
                       </object>
@@ -201,6 +206,7 @@
                     <property name="can-focus">False</property>
                     <property name="tooltip-text" translatable="yes">salvar documento</property>
                     <property name="label" translatable="yes">button_save</property>
+                    <property name="stock-id">gtk-floppy</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -213,6 +219,7 @@
                     <property name="can-focus">False</property>
                     <property name="use-underline">True</property>
                     <property name="stock-id">gtk-save-as</property>
+                    <signal name="clicked" handler="handler_save_with" swapped="no" />
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -321,7 +328,7 @@
                     <property name="receives-default">True</property>
                     <property name="font">Sans 12</property>
                     <property name="language">pt-br</property>
-                    <property name="preview-text"/>
+                    <property name="preview-text" />
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -330,22 +337,22 @@
                   </packing>
                 </child>
                 <child>
-                  <placeholder/>
+                  <placeholder />
                 </child>
                 <child>
-                  <placeholder/>
+                  <placeholder />
                 </child>
                 <child>
-                  <placeholder/>
+                  <placeholder />
                 </child>
                 <child>
-                  <placeholder/>
+                  <placeholder />
                 </child>
                 <child>
-                  <placeholder/>
+                  <placeholder />
                 </child>
                 <child>
-                  <placeholder/>
+                  <placeholder />
                 </child>
               </object>
               <packing>
