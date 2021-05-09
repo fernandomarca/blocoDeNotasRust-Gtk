@@ -56,6 +56,7 @@
                             <property name="can-focus">False</property>
                             <property name="use-underline">True</property>
                             <property name="use-stock">True</property>
+                            <signal name="activate" handler="handler_open_file" swapped="no"/>
                           </object>
                         </child>
                         <child>

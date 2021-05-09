@@ -1,9 +1,11 @@
 #![allow(unused_variables, non_snake_case, unused_imports, unused_must_use)]
+extern crate gio;
+extern crate gtk;
+
+use glib::prelude::*;
 use std::fs::{File, OpenOptions};
 use std::io::{Read, Write};
 
-extern crate gio;
-extern crate gtk;
 use gio::prelude::*;
 use gtk::{
     prelude::*, Builder, Dialog, FileChooserAction, FileChooserDialog, MenuItem, TextBuffer,
@@ -16,8 +18,9 @@ fn main() {
     }
     let glade_src = include_str!("mainWindow.glade");
     let builder = Builder::from_string(glade_src);
-
+    //
     let window: Window = builder.get_object("mainWindow").unwrap();
+    let ref_to_window_for_menu_open: Window = window.clone();
     window.show();
     window.connect_destroy(|_| {
         close();
@@ -25,6 +28,8 @@ fn main() {
     //
     let text_view: TextView = builder.get_object("text_area").unwrap();
     let ref_to_text_view: TextView = text_view.clone(); //Encontrar solução para não clonar um Widget//
+    let ref_to_text_view_for_menu_open: TextView = text_view.clone(); //Encontrar solução para não clonar um Widget//
+    let ref_to_text_view_for_menu_save: TextView = text_view.clone(); //Encontrar solução para não clonar um Widget//
     text_view.show();
     //salvar o texto escrito no TextView em disco no texto_teste.txt
     let button_save: ToolButton = builder.get_object("button_save").unwrap();
@@ -40,6 +45,19 @@ fn main() {
     let menu_quit: MenuItem = builder.get_object("menu_quit").unwrap();
     menu_quit.connect_activate(|_| {
         close();
+    });
+    //
+    let menu_open: MenuItem = builder.get_object("menu_open").unwrap();
+    menu_open.connect_activate(move |_ele| {
+        handler_open_file(
+            &ref_to_window_for_menu_open,
+            &ref_to_text_view_for_menu_open,
+        );
+    });
+    //
+    let menu_save: MenuItem = builder.get_object("menu_save").unwrap();
+    menu_open.connect_activate(move |_elem| {
+        handler_save_file(&ref_to_text_view_for_menu_save);
     });
     //
     fn handler_open_file(parent: &Window, textView: &TextView) {
@@ -95,9 +113,11 @@ fn main() {
         let _re = file.write(buf);
         file.flush();
     }
-
+    //
     fn close() {
         gtk::main_quit();
     }
+    //
+
     gtk::main();
 }
