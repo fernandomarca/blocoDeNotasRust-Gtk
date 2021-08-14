@@ -41,6 +41,7 @@ fn handler_open_file(text_view: TextView) -> Option<PathBuf> {
       text_view.set_buffer(Some(&buffer));
       //
       dialog_file_chooser.close();
+      text_view.show();
       Some(file_path)
     }
     _ => None,
@@ -117,11 +118,11 @@ fn handler_new_document(text_view: TextView) {
   let buffer = TextBuffer::new(Some(&TextTagTable::new()));
   buffer.set_text("");
   text_view.set_buffer(Some(&buffer));
+  text_view.show();
 }
 //
-fn handler_close_document() {
-  // handler_new_document();
-  todo!()
+fn handler_close_document(text_view: TextView) {
+  text_view.hide();
 }
 //
 fn handler_about() {
@@ -158,6 +159,12 @@ pub fn builder_window(name: &str) -> Window {
   let button_open: ToolButton = builder_tool_button(&builder, "button_open");
   button_open.connect_clicked(clone!(@weak text_view => move |_elem| {
       unsafe{PATH = handler_open_file(text_view);}
+  }));
+  //button_close
+  let button_close: ToolButton = builder_tool_button(&builder, "button_close");
+  button_close.connect_clicked(clone!(@weak text_view => move |_elem| {
+      handler_close_document(text_view);
+      unsafe { PATH = None };
   }));
   //
   let menu_quit: MenuItem = builder_menu_item(&builder, "menu_quit").unwrap();
