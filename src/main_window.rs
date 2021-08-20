@@ -7,10 +7,39 @@ use gtk::{
 use std::fs::{File, OpenOptions};
 use std::io::{Read, Write};
 use std::path::PathBuf;
-
 static mut PATH: Option<PathBuf> = None; //compartilha o caminho do arquivo
+struct FilePath {
+  path: Option<PathBuf>,
+}
 
-fn handler_open_file(text_view: TextView) -> Option<PathBuf> {
+impl FilePath {
+  fn new() -> FilePath {
+    FilePath { path: None }
+  }
+  fn put_path(&mut self, path: PathBuf) {
+    self.path = Some(path);
+  }
+  fn get_path(self) -> Option<PathBuf> {
+    self.path
+  }
+}
+
+fn put_path(path: Option<PathBuf>) {
+  unsafe {
+    match &path {
+      Some(PathBuf) => PATH = path,
+      _ => PATH = None,
+    }
+  };
+}
+
+fn get_path() -> Option<PathBuf> {
+  unsafe {
+    return PATH.clone();
+  }
+}
+
+fn handler_open_file(text_view: TextView) {
   let action_open = FileChooserAction::Open;
   let window = Window::new(gtk::WindowType::Popup);
   let dialog_file_chooser = FileChooserDialog::with_buttons(
@@ -24,7 +53,7 @@ fn handler_open_file(text_view: TextView) -> Option<PathBuf> {
   );
   dialog_file_chooser.show();
   let res = dialog_file_chooser.run();
-  let current_path = match res {
+  match res {
     gtk::ResponseType::Accept => {
       let file = dialog_file_chooser.file().unwrap();
       //
@@ -42,15 +71,14 @@ fn handler_open_file(text_view: TextView) -> Option<PathBuf> {
       //
       dialog_file_chooser.close();
       text_view.show();
-      Some(file_path)
+      put_path(Some(file_path));
     }
-    _ => None,
+    _ => put_path(None),
   };
   dialog_file_chooser.close();
-  current_path
 }
 //
-fn handler_save_file(text_view: TextView, path: &Option<PathBuf>) {
+fn handler_save_file(text_view: TextView) {
   //pega o texto do text_view
   let context = text_view.buffer().unwrap();
   let start = context.start_iter();
@@ -60,7 +88,8 @@ fn handler_save_file(text_view: TextView, path: &Option<PathBuf>) {
   let buf = text.as_bytes();
   //
   let mut open = OpenOptions::new();
-  match &path {
+  let current_path = get_path();
+  match current_path {
     Some(p) => {
       let mut file = open.write(true).truncate(true).open(p).unwrap();
       let _re = file.write(buf);
@@ -105,11 +134,9 @@ fn handler_save_as(text_view: TextView) {
       let _re = file.write(buf);
       file.flush();
       dialog_file_chooser.close();
-      unsafe {
-        PATH = Some(file_name);
-      };
+      put_path(Some(file_name));
     }
-    _ => unsafe { PATH = None },
+    _ => put_path(None),
   }
   dialog_file_chooser.close();
 }
@@ -147,24 +174,26 @@ pub fn builder_window(name: &str) -> Window {
   //
   let button_save: ToolButton = builder_tool_button(&builder, "button_save");
   button_save.connect_clicked(clone!(@weak text_view => move |_| {
-      handler_save_file(text_view, unsafe{&PATH});
+      handler_save_file(text_view);
   }));
   //
   let button_save_as: ToolButton = builder_tool_button(&builder, "button_save_as");
   button_save_as.connect_clicked(clone!(@weak text_view => move |_| {
         handler_save_as(text_view);
-        unsafe { PATH = None };
+        // unsafe { PATH = None };
+        put_path(None);
   }));
   //
   let button_open: ToolButton = builder_tool_button(&builder, "button_open");
   button_open.connect_clicked(clone!(@weak text_view => move |_elem| {
-      unsafe{PATH = handler_open_file(text_view);}
+      handler_open_file(text_view);
   }));
   //button_close
   let button_close: ToolButton = builder_tool_button(&builder, "button_close");
   button_close.connect_clicked(clone!(@weak text_view => move |_elem| {
       handler_close_document(text_view);
-      unsafe { PATH = None };
+      // unsafe { PATH = None };
+      put_path(None);
   }));
   //
   let menu_quit: MenuItem = builder_menu_item(&builder, "menu_quit").unwrap();
@@ -174,12 +203,12 @@ pub fn builder_window(name: &str) -> Window {
   //
   let menu_open: MenuItem = builder_menu_item(&builder, "menu_open").unwrap();
   menu_open.connect_activate(clone!(@weak text_view => move |_ele| {
-      unsafe{PATH = handler_open_file(text_view);}
+     handler_open_file(text_view);
   }));
   //
   let menu_save: MenuItem = builder_menu_item(&builder, "menu_save").unwrap();
   menu_open.connect_activate(clone!(@weak text_view => move |_elem| {
-    handler_save_file(text_view, unsafe{&PATH});
+    handler_save_file(text_view);
   }));
   window
 }
