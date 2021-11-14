@@ -31,3 +31,19 @@ fn do_a_call() {
 
 //   println!("called {}", ARRAY2.lock().unwrap().len());
 // }
+
+// struct FilePath {
+//   path: Option<PathBuf>,
+// }
+
+// impl FilePath {
+//   fn new() -> FilePath {
+//     FilePath { path: None }
+//   }
+//   fn put_path(&mut self, path: PathBuf) {
+//     self.path = Some(path);
+//   }
+//   fn get_path(self) -> Option<PathBuf> {
+//     self.path
+//   }
+// }
