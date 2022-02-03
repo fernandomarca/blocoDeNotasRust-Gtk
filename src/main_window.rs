@@ -152,9 +152,21 @@ fn handler_new_document(text_view: TextView) {
 }
 //
 fn handler_close_document(text_view: TextView) {
+  //pega o texto do text_view
+  let context = text_view.buffer().unwrap();
+  let start = context.char_count();
+  if start > 0 {
+    handler_save_as(text_view.clone());
+    let context = String::from("");
+    let buffer = TextBuffer::new(Some(&TextTagTable::new()));
+    buffer.set_text(&context);
+    text_view.set_buffer(Some(&buffer));
+    text_view.hide();
+  }
   update_filePath(None);
-  println!("{:?}", get_filePath());
   text_view.hide();
+  println!("{:?}", get_filePath());
+  println!("{:?}", start);
 }
 //
 fn handler_about() {
