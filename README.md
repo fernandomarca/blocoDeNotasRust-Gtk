@@ -17,13 +17,13 @@ gio = "0.14.0"
 
 ### Funcionalidades prontas
 
-- Abre qualquer documento de texto do disco
+- Botão Abrir 
 
-- Salva o texto digitado no textView em documento texto em qualquer extensão
+- Botão Salvar
   
 - Botão Salvar como
 
-- Botão fechar documento solicitando se deseja salvar ou descartar modificações
+- Botão fechar - documento solicita se deseja salvar ou descartar modificações
 
 - Botão criar novo documento
 
